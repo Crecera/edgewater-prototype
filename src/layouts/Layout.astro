@@ -4,9 +4,10 @@ interface Props {
   description: string;
   ogImage?: string;
   schema?: string;
+  transparentNav?: boolean;
 }
 
-const { title, description, ogImage = 'https://admin.edgewaterhotel.com/content/uploads/2025/12/The-Edgewater-Hotel-Seattle-WA-1.jpg', schema } = Astro.props;
+const { title, description, ogImage = 'https://admin.edgewaterhotel.com/content/uploads/2025/12/The-Edgewater-Hotel-Seattle-WA-1.jpg', schema, transparentNav = false } = Astro.props;
 const currentPath = Astro.url.pathname;
 
 const nobleHouseProperties = [
@@ -119,11 +120,11 @@ const hotelSchema = JSON.stringify({
   <input type="checkbox" id="mobile-nav-toggle" class="mobile-nav-checkbox" aria-hidden="true" />
 
   <!-- Navigation -->
-  <header class="site-nav">
+  <header class:list={['site-nav', { 'nav-scrolled': !transparentNav }]}>
     <div class="nav-inner">
       <a href="/" class="nav-logo" aria-label="The Edgewater Hotel — Home">
-        <span class="logo-text">The Edgewater</span>
-        <span class="logo-sub">HOTEL</span>
+        <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/20160718_TE_logo_white-287x66.png" alt="The Edgewater Hotel" class="nav-logo-white" width="200" height="46" />
+        <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/20160718_TE_logo_white-287x66.png" alt="The Edgewater Hotel" class="nav-logo-dark" width="200" height="46" />
       </a>
 
       <nav class="nav-links" aria-label="Main navigation">
@@ -191,8 +192,7 @@ const hotelSchema = JSON.stringify({
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <span class="logo-text">The Edgewater</span>
-          <span class="logo-sub">HOTEL</span>
+          <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/20160718_TE_logo_white-287x66.png" alt="The Edgewater Hotel" class="footer-logo" width="200" height="46" />
           <p class="footer-tagline">Seattle's only over-water hotel. Where rock 'n' roll legacy meets Pacific Northwest beauty.</p>
           <div class="footer-contact">
             <p>2411 Alaskan Way, Pier 67</p>
@@ -243,6 +243,24 @@ const hotelSchema = JSON.stringify({
       </div>
     </div>
   </footer>
+
+  <!-- Scroll-aware nav (only on pages with transparent nav) -->
+  <script is:inline define:vars={{ transparentNav }}>
+    (function() {
+      if (!transparentNav) return;
+      var nav = document.querySelector('.site-nav');
+      var threshold = 80;
+      function onScroll() {
+        if (window.scrollY > threshold) {
+          nav.classList.add('nav-scrolled');
+        } else {
+          nav.classList.remove('nav-scrolled');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
 
   <!-- AZDS Booking Engine -->
   <script is:inline src="https://newbooking.azds.com/inline.bundle.js" defer></script>
@@ -378,17 +396,21 @@ const hotelSchema = JSON.stringify({
     .hamburger { display: flex; }
   }
 
-  /* --- Navigation --- */
+  /* --- Navigation (transparent → sand on scroll) --- */
   .site-nav {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 100;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(226,221,210,0.5);
+    background: transparent;
     height: var(--nav-height);
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .site-nav.nav-scrolled {
+    background: var(--sand-dark);
+    box-shadow: 0 1px 8px rgba(0,0,0,0.08);
   }
 
   .nav-inner {
@@ -403,27 +425,28 @@ const hotelSchema = JSON.stringify({
 
   .nav-logo {
     display: flex;
-    flex-direction: column;
     align-items: center;
     line-height: 1;
   }
 
-  .logo-text {
-    font-family: var(--font-heading);
-    font-size: 1.3rem;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    color: var(--charcoal);
+  .nav-logo img {
+    height: 46px;
+    width: auto;
+    transition: opacity 0.4s ease, filter 0.4s ease;
   }
 
-  .logo-sub {
-    font-family: var(--font-body);
-    font-size: 0.6rem;
-    font-weight: 500;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--warm-gray);
+  /* White logo visible by default (over hero video) */
+  .nav-logo-white {
+    display: block;
   }
+  .nav-logo-dark {
+    display: none;
+    filter: brightness(0) saturate(100%) invert(8%) sepia(5%) saturate(468%) hue-rotate(22deg);
+  }
+
+  /* When scrolled: swap to dark logo */
+  .nav-scrolled .nav-logo-white { display: none; }
+  .nav-scrolled .nav-logo-dark { display: block; }
 
   .nav-links {
     display: flex;
@@ -435,23 +458,27 @@ const hotelSchema = JSON.stringify({
     font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--charcoal);
+    color: rgba(255,255,255,0.9);
     padding: 0.5rem 0;
     border-bottom: 2px solid transparent;
-    transition: border-color 0.2s;
+    transition: color 0.4s ease, border-color 0.2s;
+  }
+
+  .nav-scrolled .nav-links a {
+    color: var(--charcoal);
   }
 
   .nav-links a.active {
-    border-bottom-color: var(--charcoal);
+    border-bottom-color: currentColor;
   }
 
   .nav-links a:hover {
-    border-bottom-color: var(--warm-gray);
+    border-bottom-color: currentColor;
+    opacity: 0.8;
   }
 
   .nav-links a.nav-disabled {
-    color: var(--warm-gray);
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: default;
     pointer-events: none;
   }
@@ -464,8 +491,13 @@ const hotelSchema = JSON.stringify({
 
   .nav-phone {
     font-size: 0.85rem;
-    color: var(--warm-gray);
+    color: rgba(255,255,255,0.8);
     letter-spacing: 0.03em;
+    transition: color 0.4s ease;
+  }
+
+  .nav-scrolled .nav-phone {
+    color: var(--warm-gray);
   }
 
   .btn-sm {
@@ -473,8 +505,31 @@ const hotelSchema = JSON.stringify({
     font-size: 0.75rem;
   }
 
+  /* Nav Book Now button: outline white on hero, solid dark when scrolled */
+  .nav-actions .btn-primary {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.6);
+    color: #fff;
+    transition: all 0.4s ease;
+  }
+
+  .nav-scrolled .nav-actions .btn-primary {
+    background: var(--charcoal);
+    border-color: var(--charcoal);
+    color: #fff;
+  }
+
+  /* Hamburger: white on hero, dark when scrolled */
+  .hamburger span {
+    background: #fff;
+    transition: background 0.4s ease;
+  }
+  .nav-scrolled .hamburger span {
+    background: var(--charcoal);
+  }
+
   main {
-    margin-top: var(--nav-height);
+    /* No margin-top — hero sits behind transparent nav */
   }
 
   @media (max-width: 900px) {
@@ -544,13 +599,10 @@ const hotelSchema = JSON.stringify({
     margin-bottom: var(--space-xl);
   }
 
-  .footer-brand .logo-text {
-    color: var(--white);
-    font-size: 1.5rem;
-  }
-
-  .footer-brand .logo-sub {
-    color: var(--sand-dark);
+  .footer-logo {
+    height: 46px;
+    width: auto;
+    margin-bottom: var(--space-xs);
   }
 
   .footer-tagline {

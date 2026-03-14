@@ -48,9 +48,12 @@ html {
 body {
   font-family: var(--font-body);
   color: var(--charcoal);
-  background: var(--white);
-  line-height: 1.6;
-  font-size: 1.05rem;
+  background: var(--cream);
+  font-size: 18px;
+  line-height: 2;
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 img {
@@ -177,7 +180,7 @@ p { max-width: 65ch; }
 /* --- Hero --- */
 .hero {
   position: relative;
-  min-height: 85vh;
+  min-height: 100vh;
   display: flex;
   align-items: flex-end;
   padding-bottom: var(--space-2xl);
@@ -190,7 +193,8 @@ p { max-width: 65ch; }
   z-index: 0;
 }
 
-.hero-bg img {
+.hero-bg img,
+.hero-bg video {
   width: 100%;
   height: 100%;
   object-fit: cover;

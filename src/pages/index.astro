@@ -5,16 +5,21 @@ import Layout from '../layouts/Layout.astro';
 <Layout
   title="The Edgewater Hotel | Luxury Waterfront Hotel in Downtown Seattle"
   description="The Edgewater is Seattle's only over-water hotel, and an iconic downtown luxury Seattle hotel immortalized in rock history by The Beatles."
+  transparentNav={true}
 >
 
-  <!-- Hero -->
+  <!-- Hero with Background Video -->
   <section class="hero">
     <div class="hero-bg">
-      <img
-        src="https://admin.edgewaterhotel.com/content/uploads/2025/12/The-Edgewater-Hotel-Seattle-WA-1.jpg"
-        alt="The Edgewater Hotel on the waterfront of Elliott Bay, Seattle"
-        loading="eager"
-      />
+      <video
+        autoplay
+        loop
+        muted
+        playsinline
+        poster="https://admin.edgewaterhotel.com/content/uploads/2025/12/The-Edgewater-Hotel-Seattle-WA-1.jpg"
+      >
+        <source src="https://admin.edgewaterhotel.com/content/uploads/2026/02/THE-EDGEWATER-FULL-VIDEO-19.4-MB.mp4" type="video/mp4" />
+      </video>
     </div>
     <div class="hero-overlay"></div>
     <div class="container hero-content">
