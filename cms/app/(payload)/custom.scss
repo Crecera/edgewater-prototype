@@ -1,1 +1,262 @@
-/* Custom admin styles can go here */
+/* ==========================================================================
+   Edgewater CMS — Custom Admin Theme
+   Styled to feel warm and branded, closer to a WordPress-like experience
+   ========================================================================== */
+
+:root {
+  /* Override Payload's default theme colors */
+  --theme-elevation-0: #faf9f6;
+  --theme-elevation-50: #f5f3ef;
+  --theme-elevation-100: #edeae4;
+  --theme-elevation-150: #e8e4dc;
+  --theme-elevation-200: #e2ddd2;
+  --theme-elevation-250: #d4cfc4;
+  --theme-elevation-300: #c5bfb3;
+  --theme-elevation-350: #b5afa3;
+  --theme-elevation-400: #a39d92;
+  --theme-elevation-450: #918b80;
+  --theme-elevation-500: #7f7a6f;
+  --theme-elevation-550: #6d685e;
+  --theme-elevation-600: #5b564e;
+  --theme-elevation-650: #49453e;
+  --theme-elevation-700: #37342e;
+  --theme-elevation-750: #262420;
+  --theme-elevation-800: #1a1a19;
+  --theme-elevation-850: #111110;
+  --theme-elevation-900: #0a0a09;
+  --theme-elevation-950: #050504;
+  --theme-elevation-1000: #000000;
+
+  /* Brand accent */
+  --theme-success-500: #6b8f71;
+  --theme-error-500: #c44b4b;
+  --theme-warning-500: #c4a97d;
+
+  /* Typography */
+  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Softer borders */
+  --theme-border-color: #e2ddd2;
+}
+
+/* --- Global font override --- */
+body {
+  font-family: var(--font-body) !important;
+  background: var(--theme-elevation-50) !important;
+}
+
+/* --- Branded header / nav --- */
+.nav {
+  background: #1a1a19 !important;
+}
+
+.nav__brand {
+  padding: 20px 16px !important;
+}
+
+/* Style the nav links */
+.nav .nav-group__toggle,
+.nav .nav-group__content a {
+  font-family: var(--font-body) !important;
+  font-size: 14px !important;
+  letter-spacing: 0.02em;
+}
+
+.nav .nav-group__content a:hover,
+.nav .nav-group__content a.active {
+  background: rgba(226, 221, 210, 0.12) !important;
+}
+
+.nav .nav-group__toggle {
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* --- Top header bar --- */
+.app-header {
+  background: #fff !important;
+  border-bottom: 1px solid #e2ddd2 !important;
+  box-shadow: none !important;
+}
+
+/* --- Dashboard welcome --- */
+.dashboard__wrap {
+  max-width: 1200px;
+}
+
+.dashboard__card-list {
+  gap: 16px !important;
+}
+
+/* --- Collection list cards on dashboard --- */
+.card {
+  border: 1px solid #e2ddd2 !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+  transition: box-shadow 0.2s ease, transform 0.2s ease !important;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+  transform: translateY(-1px) !important;
+}
+
+.card__title {
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+}
+
+/* --- Buttons --- */
+.btn {
+  border-radius: 6px !important;
+  font-family: var(--font-body) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn--style-primary {
+  background: #1a1a19 !important;
+  border-color: #1a1a19 !important;
+}
+
+.btn--style-primary:hover {
+  background: #333 !important;
+  border-color: #333 !important;
+}
+
+.btn--style-secondary {
+  border-color: #e2ddd2 !important;
+}
+
+.btn--style-secondary:hover {
+  background: #f5f3ef !important;
+}
+
+/* --- Form fields --- */
+.field-type input,
+.field-type textarea,
+.field-type select,
+.react-select__control {
+  border-radius: 6px !important;
+  border-color: #e2ddd2 !important;
+  font-family: var(--font-body) !important;
+  transition: border-color 0.2s ease !important;
+}
+
+.field-type input:focus,
+.field-type textarea:focus,
+.react-select__control--is-focused {
+  border-color: #1a1a19 !important;
+  box-shadow: 0 0 0 2px rgba(26, 26, 25, 0.08) !important;
+}
+
+.field-type label,
+.field-type .field-label {
+  font-family: var(--font-body) !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.03em !important;
+  text-transform: none !important;
+}
+
+/* --- Table / list view --- */
+.table {
+  border: 1px solid #e2ddd2 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+.table .row-1:nth-child(even) {
+  background: #faf9f6 !important;
+}
+
+.table .cell-title {
+  font-weight: 500 !important;
+}
+
+/* --- Sidebar in document edit --- */
+.document-fields__sidebar {
+  background: #faf9f6 !important;
+  border-left: 1px solid #e2ddd2 !important;
+}
+
+/* --- Save bar at bottom --- */
+.doc-controls {
+  background: #fff !important;
+  border-top: 1px solid #e2ddd2 !important;
+}
+
+/* --- Tabs --- */
+.tabs-field__tabs .tabs-field__tab-button {
+  font-family: var(--font-body) !important;
+  font-weight: 500 !important;
+}
+
+.tabs-field__tab-button--active {
+  border-bottom-color: #1a1a19 !important;
+}
+
+/* --- Array / group field styling --- */
+.array-field__header,
+.group-field__header {
+  background: #f5f3ef !important;
+  border-color: #e2ddd2 !important;
+}
+
+/* --- Pill / badge styling --- */
+.pill {
+  border-radius: 4px !important;
+  font-family: var(--font-body) !important;
+  font-size: 12px !important;
+}
+
+/* --- Toast notifications --- */
+.Toastify__toast {
+  border-radius: 8px !important;
+  font-family: var(--font-body) !important;
+}
+
+/* --- Login page branding --- */
+.login {
+  background: #1a1a19 !important;
+}
+
+.login__form {
+  background: #fff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+}
+
+.login .form-submit .btn {
+  background: #1a1a19 !important;
+  border-radius: 6px !important;
+  width: 100% !important;
+}
+
+/* --- Scrollbar styling --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f3ef;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4cfc4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b5afa3;
+}
+
+/* --- Loading bar color --- */
+.payload__progress-bar {
+  background: #c4a97d !important;
+}
