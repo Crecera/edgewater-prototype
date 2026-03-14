@@ -1,0 +1,133 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Downtown Seattle Hotel Suites | The Edgewater Hotel"
+  description="Unwind and recharge in spacious, luxury Seattle accommodations with views of the cityscape or of the Puget Sound. Guestrooms feature elevated amenities."
+  ogImage="https://admin.edgewaterhotel.com/content/uploads/2025/12/nhh200-noble-house-edgewater-offers2.jpg"
+>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="hero-bg">
+      <img
+        src="https://admin.edgewaterhotel.com/content/uploads/2025/12/nhh200-noble-house-edgewater-offers2.jpg"
+        alt="A large room with a lounge area, balcony on the water and a canopy bed"
+        loading="eager"
+      />
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <h1>Elevated Accommodations in Seattle</h1>
+      <p>Unwind and recharge in spacious rooms overlooking the bustling cityscape, or the waters of Puget Sound. Each guestroom features countless amenities, like a gas fireplace for those chilly Seattle nights, so you can focus on the fun and leave the rest to us.</p>
+    </div>
+  </section>
+
+  <!-- Room Categories -->
+  <section class="section section-cream">
+    <div class="container">
+      <div class="grid-2">
+        <a href="#" class="category-card">
+          <img
+            src="https://admin.edgewaterhotel.com/content/uploads/2026/01/Edgewater_King_Living_Balcony.jpg"
+            alt="A king room with a fireplace and balcony at Edgewater"
+            loading="lazy"
+          />
+          <div class="category-body">
+            <h2>City View Rooms</h2>
+            <p>With a variety of views of the city skyline and the greenery that surround our City View guest rooms, there's no question you'll feel at home in Seattle.</p>
+            <span class="btn btn-outline btn-sm">Explore City View Rooms</span>
+          </div>
+        </a>
+
+        <a href="#" class="category-card">
+          <img
+            src="https://admin.edgewaterhotel.com/content/uploads/2026/02/Edgewater-Overwater-King-with-Balcony.jpg"
+            alt="A beautiful Overwater King with Balcony at Edgewater"
+            loading="lazy"
+          />
+          <div class="category-body">
+            <h2>Water View Rooms</h2>
+            <p>Immerse yourself in Pacific Northwest-inspired accommodations and take in the Puget Sound views from your Over-Water guest room before you set out to explore.</p>
+            <span class="btn btn-outline btn-sm">Explore Water View Rooms</span>
+          </div>
+        </a>
+
+        <a href="/stay/beatles-suite/" class="category-card">
+          <img
+            src="https://admin.edgewaterhotel.com/content/uploads/2025/12/b2-scaled.jpg"
+            alt="A pug in the Beatles suite"
+            loading="lazy"
+          />
+          <div class="category-body">
+            <h2>Specialty Rooms & Suites</h2>
+            <p>Immerse yourself in Seattle rock 'n' roll history, or unwind in Pacific Northwest luxury. Our suites are ideal for music lovers and guests who want their room to be just as memorable as the views.</p>
+            <span class="btn btn-outline btn-sm">Explore Specialty Rooms</span>
+          </div>
+        </a>
+
+        <a href="#" class="category-card">
+          <img
+            src="https://admin.edgewaterhotel.com/content/uploads/2026/01/Edgewater_Double_Sitting_Water_Balcony.jpg"
+            alt="Two double beds with a balcony and a view of the water"
+            loading="lazy"
+          />
+          <div class="category-body">
+            <h2>Accessible Rooms</h2>
+            <p>Your choice of view and all the thoughtful amenities of our standard guest rooms and suites, with all the necessary ADA accessible features.</p>
+            <span class="btn btn-outline btn-sm">Explore Accessible Rooms</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Offers CTA -->
+  <section class="feature-split">
+    <img
+      class="feature-split-img"
+      src="https://admin.edgewaterhotel.com/content/uploads/2026/02/EdgewaterJune2024-0844.jpg"
+      alt="A woman using her laptop in the lobby of Edgewater"
+      loading="lazy"
+    />
+    <div class="feature-split-content section-sand">
+      <span class="label">Offers & Packages</span>
+      <h2>Elevate Your Stay</h2>
+      <p>Browse our curated selection of Seattle vacation packages and hotel offers to elevate your stay in the Emerald City.</p>
+      <a href="#" class="btn btn-outline">View All Offers</a>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .category-card {
+    display: block;
+    background: var(--white);
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+  .category-card img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+  .category-body {
+    padding: var(--space-md) var(--space-md) var(--space-lg);
+  }
+  .category-body h2 {
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    margin-bottom: var(--space-xs);
+  }
+  .category-body p {
+    color: var(--warm-gray);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-md);
+  }
+</style>

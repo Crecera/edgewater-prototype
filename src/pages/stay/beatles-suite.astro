@@ -1,0 +1,216 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Beatles Suite | The Edgewater Hotel Seattle"
+  description="Relive a legendary moment in history and stay in the suite made famous by the iconic image of The Beatles' fishing out of the window."
+  ogImage="https://admin.edgewaterhotel.com/content/uploads/2026/01/nhh200-noble-house-edgewater-stay-beatles-3.jpg"
+>
+
+  <!-- Page Header -->
+  <section class="page-header room-hero">
+    <div class="hero-bg">
+      <img
+        src="https://admin.edgewaterhotel.com/content/uploads/2025/12/b2-scaled.jpg"
+        alt="A pug in the Beatles suite"
+        loading="eager"
+      />
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <a href="/stay/" class="breadcrumb">&larr; All Rooms</a>
+      <h1>Beatles Suite</h1>
+      <div class="room-meta" style="margin-top: var(--space-sm);">
+        <span>Over-Water</span>
+        <span>Sleeps 2</span>
+        <span>750 sq ft</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Room Description -->
+  <section class="section">
+    <div class="container room-content-grid">
+      <div class="room-description">
+        <p class="lead">Step into a piece of rock history in this storied one-bedroom suite, famously connected to The Beatles' visit to Seattle and their iconic "Yesterday" fishing photo.</p>
+        <p>Full panoramic views of Elliott Bay create a striking backdrop, while the plush king bed ensures a restful and comfortable stay. The studio-style living room offers generous space with its library, dining area and gas fireplace, creating a welcoming setting for relaxation or entertaining.</p>
+        <p>Music lovers will appreciate the state-of-the-art stereo system paired with a curated Beatles CD collection. The bathroom features a glass-surround shower with both waterfall and handheld shower heads, along with a spacious bathtub for unwinding after a day in the city.</p>
+        <div class="room-ctas">
+          <a href="#" class="btn btn-primary">Check Availability</a>
+          <a href="#" class="btn btn-outline">Take a 360&deg; Tour</a>
+        </div>
+      </div>
+
+      <div class="room-sidebar">
+        <div class="booking-widget">
+          <h3>Book This Suite</h3>
+          <div class="booking-field">
+            <label>Check In</label>
+            <input type="date" />
+          </div>
+          <div class="booking-field">
+            <label>Check Out</label>
+            <input type="date" />
+          </div>
+          <div class="booking-field">
+            <label>Guests</label>
+            <select>
+              <option>1 Adult</option>
+              <option selected>2 Adults</option>
+            </select>
+          </div>
+          <a href="#" class="btn btn-primary" style="width: 100%; justify-content: center;">Check Availability</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Amenities -->
+  <section class="section section-cream">
+    <div class="container">
+      <span class="label">In Your Suite</span>
+      <h2 style="margin-top: 0.5rem; margin-bottom: var(--space-md);">Special Touches</h2>
+      <p style="margin-bottom: var(--space-lg); color: var(--warm-gray);">Wake up to a fresh coffee from your in-room Keurig or The Brim Coffee Shop downstairs, and enjoy the views of either the city or the water. Bring each day to a close in front of your gas burning fireplace before climbing into bed and getting cozy underneath a luxurious down feather duvet.</p>
+      <ul class="room-detail-amenities">
+        <li>Gas fireplace</li>
+        <li>50" Television & streaming entertainment</li>
+        <li>Keurig coffee machine</li>
+        <li>Refrigerator & Honor Bar</li>
+        <li>Laptop-compatible in-room safe</li>
+        <li>Down feather comforter</li>
+        <li>In-room Wi-Fi</li>
+        <li>Glass surround shower with waterfall & handheld heads</li>
+        <li>Panoramic views of Elliott Bay</li>
+        <li>State-of-the-art stereo with Beatles CD collection</li>
+        <li>Living room, dining area and library</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="section">
+    <div class="container">
+      <h2 style="margin-bottom: var(--space-md);">Take a Look Inside</h2>
+    </div>
+    <div class="gallery-strip">
+      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/Edgewater_Dockside_LgBalcony.jpg" alt="Balcony overlooking the water with lounge chairs" loading="lazy" />
+      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/nhh200-noble-house-edgewater-stay-beatles-5.jpg" alt="Beatles suite round table, fireplace, and lounge space" loading="lazy" />
+      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/nhh200-noble-house-edgewater-stay-beatles-4.jpg" alt="Bright Beatles-inspired bedroom" loading="lazy" />
+      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/nhh200-noble-house-edgewater-stay-beatles-2.jpg" alt="Beatles suite lounge space and bedroom" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- Offers CTA -->
+  <section class="cta-banner">
+    <div class="hero-bg">
+      <img
+        src="https://admin.edgewaterhotel.com/content/uploads/2025/12/nhh200-noble-house-edgewater-offers3.jpg"
+        alt="Lounge area at The Edgewater with water view and fireplace"
+        loading="lazy"
+      />
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="container cta-banner-content">
+      <h2>Offers & Packages</h2>
+      <p>Add exclusive packages and special offers to your stay in the Emerald City, each carefully designed to help you make the most of your time in Seattle.</p>
+      <a href="#" class="btn btn-sand">View All Offers</a>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .breadcrumb {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: var(--space-sm);
+    transition: color 0.2s;
+  }
+  .breadcrumb:hover { color: #fff; }
+
+  .room-hero .room-meta span {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.3);
+    color: #fff;
+  }
+
+  .room-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .room-description .lead {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    margin-bottom: var(--space-md);
+  }
+
+  .room-description p {
+    color: var(--warm-gray);
+    margin-bottom: var(--space-sm);
+    line-height: 1.8;
+  }
+
+  .room-ctas {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .room-sidebar {
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-md));
+  }
+
+  .booking-widget {
+    background: var(--cream);
+    padding: var(--space-lg);
+  }
+
+  .booking-widget h3 {
+    font-family: var(--font-heading);
+    margin-bottom: var(--space-md);
+  }
+
+  .booking-field {
+    margin-bottom: var(--space-sm);
+  }
+
+  .booking-field label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    margin-bottom: 0.3rem;
+  }
+
+  .booking-field input,
+  .booking-field select {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid var(--sand-dark);
+    background: var(--white);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--charcoal);
+  }
+
+  @media (max-width: 900px) {
+    .room-content-grid {
+      grid-template-columns: 1fr;
+    }
+    .room-sidebar {
+      position: static;
+    }
+  }
+</style>

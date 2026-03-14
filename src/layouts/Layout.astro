@@ -1,0 +1,335 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage = 'https://admin.edgewaterhotel.com/content/uploads/2025/12/The-Edgewater-Hotel-Seattle-WA-1.jpg' } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="The Edgewater Hotel Seattle" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://www.edgewaterhotel.com/_next/static/media/favicon.6571601d.png" />
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="The Edgewater Hotel — Home">
+        <span class="logo-text">The Edgewater</span>
+        <span class="logo-sub">HOTEL</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/stay/" class:list={[{ active: currentPath.startsWith('/stay') }]}>Stay</a>
+        <a href="/dine/" class:list={[{ active: currentPath.startsWith('/dine') }]}>Dine</a>
+        <a href="#" class="nav-disabled">Explore</a>
+        <a href="#" class="nav-disabled">Gather</a>
+        <a href="#" class="nav-disabled">Offers</a>
+        <a href="#" class="nav-disabled">About</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="tel:206.792.5959" class="nav-phone">206.792.5959</a>
+        <a href="#" class="btn btn-primary btn-sm">Book Now</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo-text">The Edgewater</span>
+          <span class="logo-sub">HOTEL</span>
+          <p class="footer-tagline">Seattle's only over-water hotel. Where rock 'n' roll legacy meets Pacific Northwest beauty.</p>
+          <div class="footer-contact">
+            <p>600 1st Ave., Ste. 330 #70875</p>
+            <p>Seattle, WA 98104</p>
+            <p><a href="tel:1-800-391-9869">1-800-391-9869</a></p>
+            <p><a href="mailto:info@edgewaterhotel.com">info@edgewaterhotel.com</a></p>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Stay</h4>
+          <ul>
+            <li><a href="/stay/">Rooms & Suites</a></li>
+            <li><a href="/stay/beatles-suite/">Beatles Suite</a></li>
+            <li><a href="#">Pearl Jam Suite</a></li>
+            <li><a href="#">Offers & Packages</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Dine</h4>
+          <ul>
+            <li><a href="/dine/six-seven-restaurant/">Six Seven Restaurant</a></li>
+            <li><a href="#">The Brim Coffee Shop</a></li>
+            <li><a href="#">Lobby Bar</a></li>
+            <li><a href="#">Menus</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#">Things To Do</a></li>
+            <li><a href="#">Space Needle</a></li>
+            <li><a href="#">Pike Place Market</a></li>
+            <li><a href="#">Getting Here</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 The Edgewater Hotel. A Noble House Hotel. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>
+
+<style>
+  /* --- Navigation --- */
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(226,221,210,0.5);
+    height: var(--nav-height);
+  }
+
+  .nav-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+  }
+
+  .logo-text {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--charcoal);
+  }
+
+  .logo-sub {
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--space-lg);
+  }
+
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .nav-links a.active {
+    border-bottom-color: var(--charcoal);
+  }
+
+  .nav-links a:hover {
+    border-bottom-color: var(--warm-gray);
+  }
+
+  .nav-links a.nav-disabled {
+    color: var(--warm-gray);
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .nav-phone {
+    font-size: 0.85rem;
+    color: var(--warm-gray);
+    letter-spacing: 0.03em;
+  }
+
+  .btn-sm {
+    padding: 0.6rem 1.4rem;
+    font-size: 0.75rem;
+  }
+
+  main {
+    margin-top: var(--nav-height);
+  }
+
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .nav-phone { display: none; }
+  }
+
+  /* --- Footer --- */
+  .site-footer {
+    background: var(--charcoal);
+    color: var(--white);
+    padding: var(--space-2xl) 0 var(--space-lg);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-xl);
+  }
+
+  .footer-brand .logo-text {
+    color: var(--white);
+    font-size: 1.5rem;
+  }
+
+  .footer-brand .logo-sub {
+    color: var(--sand-dark);
+  }
+
+  .footer-tagline {
+    margin-top: var(--space-sm);
+    color: var(--warm-gray);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    max-width: 30ch;
+  }
+
+  .footer-contact {
+    margin-top: var(--space-md);
+  }
+
+  .footer-contact p {
+    font-size: 0.85rem;
+    color: var(--warm-gray);
+    line-height: 1.8;
+  }
+
+  .footer-contact a {
+    color: var(--sand);
+    transition: opacity 0.2s;
+  }
+
+  .footer-contact a:hover { opacity: 0.7; }
+
+  .footer-col h4 {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sand);
+    margin-bottom: var(--space-sm);
+  }
+
+  .footer-col li { margin-bottom: 0.6rem; }
+
+  .footer-col a {
+    font-size: 0.9rem;
+    color: var(--warm-gray);
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--white); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: var(--space-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .footer-bottom p {
+    font-size: 0.8rem;
+    color: var(--warm-gray);
+  }
+
+  .footer-legal {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .footer-legal a {
+    font-size: 0.8rem;
+    color: var(--warm-gray);
+    transition: color 0.2s;
+  }
+
+  .footer-legal a:hover { color: var(--white); }
+
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
