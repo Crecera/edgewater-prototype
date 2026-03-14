@@ -1,15 +1,31 @@
-import type { Metadata } from 'next'
-import { RootLayout } from '@payloadcms/next/layouts'
-import configPromise from '@payload-config'
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+/* DO NOT MODIFY IT BECAUSE IT COULD BE REWRITTEN AT ANY TIME. */
+import config from '@payload-config'
+import { handleServerFunctions, RootLayout } from '@payloadcms/next/layouts'
 import React from 'react'
+import { importMap } from './admin/importMap.js'
+import type { ImportMap, ServerFunctionClient } from 'payload'
 import './custom.scss'
 
 type Args = { children: React.ReactNode }
 
-export const metadata: Metadata = {
-  title: 'Edgewater CMS',
+const serverFunction: ServerFunctionClient = async (args) => {
+  'use server'
+  return handleServerFunctions({
+    ...args,
+    config,
+    importMap: importMap as ImportMap,
+  })
 }
 
-export default async function Layout({ children }: Args) {
-  return <RootLayout config={configPromise}>{children}</RootLayout>
-}
+const Layout = ({ children }: Args) => (
+  <RootLayout
+    config={config}
+    importMap={importMap as ImportMap}
+    serverFunction={serverFunction}
+  >
+    {children}
+  </RootLayout>
+)
+
+export default Layout

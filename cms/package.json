@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "next dev -p 3000",
-    "build": "opennextjs-cloudflare build",
+    "build": "next build",
+    "build:cf": "opennextjs-cloudflare build",
     "preview": "opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare deploy",
     "seed": "node --import tsx seed/index.ts"
