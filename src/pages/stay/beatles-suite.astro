@@ -43,24 +43,10 @@ import Layout from '../../layouts/Layout.astro';
       </div>
 
       <div class="room-sidebar">
-        <div class="booking-widget">
+        <div class="azds-booking-container">
           <h3>Book This Suite</h3>
-          <div class="booking-field">
-            <label>Check In</label>
-            <input type="date" />
-          </div>
-          <div class="booking-field">
-            <label>Check Out</label>
-            <input type="date" />
-          </div>
-          <div class="booking-field">
-            <label>Guests</label>
-            <select>
-              <option>1 Adult</option>
-              <option selected>2 Adults</option>
-            </select>
-          </div>
-          <a href="#" class="btn btn-primary" style="width: 100%; justify-content: center;">Check Availability</a>
+          <div id="azds-booking-widget"></div>
+          <a href="https://www.edgewaterhotel.com/#/booking/step-1" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: var(--space-sm);" target="_blank" rel="noopener">Check Availability</a>
         </div>
       </div>
     </div>
@@ -168,41 +154,6 @@ import Layout from '../../layouts/Layout.astro';
   .room-sidebar {
     position: sticky;
     top: calc(var(--nav-height) + var(--space-md));
-  }
-
-  .booking-widget {
-    background: var(--cream);
-    padding: var(--space-lg);
-  }
-
-  .booking-widget h3 {
-    font-family: var(--font-heading);
-    margin-bottom: var(--space-md);
-  }
-
-  .booking-field {
-    margin-bottom: var(--space-sm);
-  }
-
-  .booking-field label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--warm-gray);
-    margin-bottom: 0.3rem;
-  }
-
-  .booking-field input,
-  .booking-field select {
-    width: 100%;
-    padding: 0.7rem;
-    border: 1px solid var(--sand-dark);
-    background: var(--white);
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    color: var(--charcoal);
   }
 
   @media (max-width: 900px) {

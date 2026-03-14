@@ -4,7 +4,7 @@
    Palette: Warm neutrals — sand, cream, charcoal
    ========================================================================== */
 
-/* --- Google Fonts (DM Sans only — Meno Display is proprietary, we fallback to Georgia) --- */
+/* --- Google Fonts (DM Sans — Meno Display loaded via Typekit in Layout) --- */
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap');
 
 :root {
@@ -527,4 +527,60 @@ p { max-width: 65ch; }
 
 .season-card-label h3 {
   font-size: 1.4rem;
+}
+
+/* --- Scroll-driven fade-in animations --- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section,
+.feature-split,
+.cta-banner {
+  animation: fadeInUp 0.6s ease both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 25%;
+}
+
+/* Fallback for browsers without scroll-driven animations */
+@supports not (animation-timeline: view()) {
+  .section,
+  .feature-split,
+  .cta-banner {
+    animation: none;
+  }
+}
+
+/* --- Flip.to Discovery Section --- */
+.flipto-discovery {
+  background: var(--cream);
+  padding: var(--space-xl) 0;
+  min-height: 200px;
+}
+
+.flipto-discovery .container {
+  text-align: center;
+}
+
+.flipto-discovery h2 {
+  margin-bottom: var(--space-md);
+}
+
+/* --- AZDS Booking Widget container --- */
+.azds-booking-container {
+  background: var(--cream);
+  padding: var(--space-lg);
+  min-height: 200px;
+}
+
+.azds-booking-container h3 {
+  font-family: var(--font-heading);
+  margin-bottom: var(--space-md);
 }

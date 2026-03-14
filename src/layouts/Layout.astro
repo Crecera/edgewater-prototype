@@ -3,10 +3,71 @@ interface Props {
   title: string;
   description: string;
   ogImage?: string;
+  schema?: string;
 }
 
-const { title, description, ogImage = 'https://admin.edgewaterhotel.com/content/uploads/2025/12/The-Edgewater-Hotel-Seattle-WA-1.jpg' } = Astro.props;
+const { title, description, ogImage = 'https://admin.edgewaterhotel.com/content/uploads/2025/12/The-Edgewater-Hotel-Seattle-WA-1.jpg', schema } = Astro.props;
 const currentPath = Astro.url.pathname;
+
+const nobleHouseProperties = [
+  { name: 'Argonaut Hotel', url: 'https://www.argonauthotel.com' },
+  { name: 'Chatham Inn', url: 'https://www.chathaminn.com' },
+  { name: 'Corazón Cabo', url: 'https://www.corazoncabo.com' },
+  { name: 'Estancia La Jolla', url: 'https://www.estancialajolla.com' },
+  { name: 'Gateway Canyons', url: 'https://www.gatewaycanyons.com' },
+  { name: "Hart's Camp", url: 'https://www.hartscamp.com' },
+  { name: 'Headlands Lodge', url: 'https://www.headlandslodge.com' },
+  { name: 'Hotel Portofino', url: 'https://www.hotelportofino.com' },
+  { name: 'Hotel Terra', url: 'https://www.hotelterrajacksonhole.com' },
+  { name: 'Inn at Cape Kiwanda', url: 'https://www.innatcapekiwanda.com' },
+  { name: 'Inn on Fifth', url: 'https://www.innonfifth.com' },
+  { name: 'Jekyll Island Club', url: 'https://www.jekyllclub.com' },
+  { name: 'LaPlaya Resort', url: 'https://www.laplayaresort.com' },
+  { name: "L'Auberge Del Mar", url: 'https://www.laubergedelmar.com' },
+  { name: 'Little Palm Island', url: 'https://www.littlepalmisland.com' },
+  { name: 'Marquesa Hotel', url: 'https://www.marquesa.com' },
+  { name: 'Mission Bay Resort', url: 'https://www.missionbayresort.com' },
+  { name: 'Ocean Key Resort', url: 'https://www.oceankey.com' },
+  { name: 'Pelican Beach Resort', url: 'https://www.pelicanbeach.com' },
+  { name: 'Resort Kona Kai', url: 'https://www.resortkonakai.com' },
+  { name: 'River Terrace Inn', url: 'https://www.riverterraceinn.com' },
+  { name: 'Snake River Sporting Club', url: 'https://www.snakeriversportingclub.com' },
+  { name: 'Solé Miami', url: 'https://www.solemiami.com' },
+  { name: 'Teton Lodge', url: 'https://www.tetonlodge.com' },
+  { name: 'The Stella Hotel', url: 'https://www.thestellahotel.com' },
+  { name: 'Napa Valley Wine Train', url: 'https://www.winetrain.com' },
+];
+
+const hotelSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Hotel",
+  "name": "The Edgewater Hotel",
+  "url": "https://www.edgewaterhotel.com",
+  "image": ogImage,
+  "description": "Seattle's only over-water hotel, an iconic downtown luxury Seattle hotel immortalized in rock history by The Beatles.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2411 Alaskan Way, Pier 67",
+    "addressLocality": "Seattle",
+    "addressRegion": "WA",
+    "postalCode": "98121",
+    "addressCountry": "US"
+  },
+  "telephone": "+1-206-728-7000",
+  "email": "info@edgewaterhotel.com",
+  "starRating": { "@type": "Rating", "ratingValue": "4" },
+  "amenityFeature": [
+    { "@type": "LocationFeatureSpecification", "name": "Over-Water Rooms", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Waterfront Restaurant", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Coffee Shop", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "WiFi", "value": true }
+  ],
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "Noble House Hotels & Resorts",
+    "url": "https://www.noblehousehotels.com"
+  }
+});
 ---
 
 <!DOCTYPE html>
@@ -23,12 +84,40 @@ const currentPath = Astro.url.pathname;
   <meta property="og:image" content={ogImage} />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="The Edgewater Hotel Seattle" />
+  <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://www.edgewaterhotel.com/_next/static/media/favicon.6571601d.png" />
+
+  <!-- Adobe Typekit — Meno Display -->
+  <link rel="stylesheet" href="https://use.typekit.net/hbk5hzc.css" />
+
+  <!-- Hotel Schema -->
+  <script type="application/ld+json" set:html={hotelSchema} />
+
+  <!-- Page-specific schema -->
+  {schema && <script type="application/ld+json" set:html={schema} />}
+
+  <!-- GTM -->
+  <script is:inline>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TSK3HFH');
+  </script>
 </head>
 <body>
+  <!-- GTM noscript -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TSK3HFH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- Mobile Nav Toggle (CSS-only) -->
+  <input type="checkbox" id="mobile-nav-toggle" class="mobile-nav-checkbox" aria-hidden="true" />
+
   <!-- Navigation -->
   <header class="site-nav">
     <div class="nav-inner">
@@ -48,14 +137,54 @@ const currentPath = Astro.url.pathname;
 
       <div class="nav-actions">
         <a href="tel:206.792.5959" class="nav-phone">206.792.5959</a>
-        <a href="#" class="btn btn-primary btn-sm">Book Now</a>
+        <a href="https://www.edgewaterhotel.com/#/booking/step-1" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Book Now</a>
+        <label for="mobile-nav-toggle" class="hamburger" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
       </div>
     </div>
   </header>
 
+  <!-- Mobile Nav Drawer -->
+  <div class="mobile-nav-drawer">
+    <div class="mobile-nav-header">
+      <span class="logo-text">The Edgewater</span>
+      <label for="mobile-nav-toggle" class="mobile-nav-close" aria-label="Close menu">&times;</label>
+    </div>
+    <nav class="mobile-nav-links">
+      <a href="/stay/">Stay</a>
+      <a href="/dine/">Dine</a>
+      <a href="#">Explore</a>
+      <a href="#">Gather</a>
+      <a href="#">Offers</a>
+      <a href="#">About</a>
+    </nav>
+    <div class="mobile-nav-footer">
+      <a href="tel:206.792.5959" class="mobile-nav-phone">206.792.5959</a>
+      <a href="https://www.edgewaterhotel.com/#/booking/step-1" class="btn btn-primary" target="_blank" rel="noopener" style="width: 100%; justify-content: center;">Book Now</a>
+    </div>
+  </div>
+  <label for="mobile-nav-toggle" class="mobile-nav-backdrop"></label>
+
   <main>
     <slot />
   </main>
+
+  <!-- Noble House Portfolio Strip -->
+  <section class="portfolio-strip">
+    <div class="portfolio-inner">
+      <a href="https://www.noblehousehotels.com" class="portfolio-brand" target="_blank" rel="noopener">
+        Noble House Hotels & Resorts
+      </a>
+      <div class="portfolio-scroll">
+        {nobleHouseProperties.map(p => (
+          <a href={p.url} target="_blank" rel="noopener" class="portfolio-link">{p.name}</a>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer class="site-footer">
@@ -66,9 +195,9 @@ const currentPath = Astro.url.pathname;
           <span class="logo-sub">HOTEL</span>
           <p class="footer-tagline">Seattle's only over-water hotel. Where rock 'n' roll legacy meets Pacific Northwest beauty.</p>
           <div class="footer-contact">
-            <p>600 1st Ave., Ste. 330 #70875</p>
-            <p>Seattle, WA 98104</p>
-            <p><a href="tel:1-800-391-9869">1-800-391-9869</a></p>
+            <p>2411 Alaskan Way, Pier 67</p>
+            <p>Seattle, WA 98121</p>
+            <p><a href="tel:1-206-728-7000">1-206-728-7000</a></p>
             <p><a href="mailto:info@edgewaterhotel.com">info@edgewaterhotel.com</a></p>
           </div>
         </div>
@@ -114,6 +243,14 @@ const currentPath = Astro.url.pathname;
       </div>
     </div>
   </footer>
+
+  <!-- AZDS Booking Engine -->
+  <script is:inline src="https://newbooking.azds.com/inline.bundle.js" defer></script>
+  <script is:inline src="https://newbooking.azds.com/loader.bundle.js" defer></script>
+
+  <!-- Flip.to Discovery -->
+  <script is:inline src="https://cdn.flip.to/public/ftsa2.js" defer></script>
+  <script is:inline src="https://components.flip.to/discovery/edgewaterhotel/bundle?lang=en" defer></script>
 </body>
 </html>
 
@@ -122,6 +259,125 @@ const currentPath = Astro.url.pathname;
 </style>
 
 <style>
+  /* --- Mobile Nav (CSS-only) --- */
+  .mobile-nav-checkbox {
+    display: none;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--charcoal);
+    transition: all 0.3s ease;
+  }
+
+  .mobile-nav-drawer {
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 320px;
+    height: 100vh;
+    background: var(--white);
+    z-index: 200;
+    transition: right 0.35s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -4px 0 30px rgba(0,0,0,0.1);
+  }
+
+  .mobile-nav-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 199;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+
+  .mobile-nav-checkbox:checked ~ .mobile-nav-drawer {
+    right: 0;
+  }
+
+  .mobile-nav-checkbox:checked ~ .mobile-nav-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-nav-checkbox:checked ~ .site-nav .hamburger span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .mobile-nav-checkbox:checked ~ .site-nav .hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-nav-checkbox:checked ~ .site-nav .hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  .mobile-nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-md) var(--space-md);
+    border-bottom: 1px solid var(--sand-dark);
+  }
+
+  .mobile-nav-header .logo-text {
+    font-size: 1.2rem;
+  }
+
+  .mobile-nav-close {
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--charcoal);
+    line-height: 1;
+    padding: 0.25rem;
+  }
+
+  .mobile-nav-links {
+    flex: 1;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-nav-links a {
+    padding: 0.9rem 0;
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--cream);
+    color: var(--charcoal);
+  }
+
+  .mobile-nav-footer {
+    padding: var(--space-md);
+    border-top: 1px solid var(--sand-dark);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .mobile-nav-phone {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--warm-gray);
+  }
+
+  @media (max-width: 900px) {
+    .hamburger { display: flex; }
+  }
+
   /* --- Navigation --- */
   .site-nav {
     position: fixed;
@@ -225,6 +481,54 @@ const currentPath = Astro.url.pathname;
     .nav-links { display: none; }
     .nav-phone { display: none; }
   }
+
+  /* --- Noble House Portfolio Strip --- */
+  .portfolio-strip {
+    background: #111110;
+    padding: var(--space-sm) 0;
+    overflow: hidden;
+  }
+
+  .portfolio-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .portfolio-brand {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .portfolio-scroll {
+    display: flex;
+    gap: var(--space-md);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.3rem 0;
+  }
+
+  .portfolio-scroll::-webkit-scrollbar { display: none; }
+
+  .portfolio-link {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    white-space: nowrap;
+    transition: color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .portfolio-link:hover { color: rgba(255,255,255,0.7); }
 
   /* --- Footer --- */
   .site-footer {
@@ -330,6 +634,11 @@ const currentPath = Astro.url.pathname;
     .footer-bottom {
       flex-direction: column;
       text-align: center;
+    }
+    .portfolio-inner {
+      flex-direction: column;
+      gap: var(--space-xs);
+      align-items: flex-start;
     }
   }
 </style>
