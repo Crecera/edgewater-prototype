@@ -1,0 +1,18 @@
+name = "edgewater-cms"
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]
+account_id = "d6f58d71c8ddd27e868b6cab10f76d1c"
+
+[vars]
+PAYLOAD_SECRET = "edgewater-prod-secret-replace-me"
+PAYLOAD_URL = "https://edgewater-cms.david4683.workers.dev"
+
+[[d1_databases]]
+binding = "D1"
+database_name = "edgewater-cms-db"
+database_id = "b3dbfbb6-9e20-4e5b-8050-b6f3aa24f799"
+
+# Uncomment when R2 bucket is created for media uploads
+# [[r2_buckets]]
+# binding = "R2"
+# bucket_name = "edgewater-media"

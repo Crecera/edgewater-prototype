@@ -1,6 +1,6 @@
 import type { AdminViewProps } from 'payload'
 import { DefaultTemplate } from '@payloadcms/next/templates'
-import { importMap } from './importMap.js'
+import { importMap } from '../importMap.js'
 import configPromise from '@payload-config'
 
 export { generatePageMetadata as generateMetadata } from '@payloadcms/next/views'

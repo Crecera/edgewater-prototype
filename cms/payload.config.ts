@@ -4,11 +4,12 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-import { Pages } from './collections/Pages.js'
-import { Rooms } from './collections/Rooms.js'
-import { DiningVenues } from './collections/DiningVenues.js'
-import { Media } from './collections/Media.js'
-import { SiteSettings } from './globals/SiteSettings.js'
+import { Pages } from './collections/Pages'
+import { Rooms } from './collections/Rooms'
+import { DiningVenues } from './collections/DiningVenues'
+import { Media } from './collections/Media'
+import { Users } from './collections/Users'
+import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -22,7 +23,7 @@ export default buildConfig({
     },
   },
   editor: lexicalEditor(),
-  collections: [Pages, Rooms, DiningVenues, Media],
+  collections: [Pages, Rooms, DiningVenues, Media, Users],
   globals: [SiteSettings],
   db: sqliteAdapter({
     client: {
@@ -31,7 +32,7 @@ export default buildConfig({
   }),
   cors: [
     'http://localhost:4321',
-    'https://edgewater-prototype.pages.dev',
+    'https://edgewater-prototype.david4683.workers.dev',
   ],
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
