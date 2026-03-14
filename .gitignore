@@ -3,3 +3,7 @@ dist/
 .astro/
 .env
 .env.*
+cms/node_modules/
+cms/data/
+cms/.next/
+cms/payload-types.ts

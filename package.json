@@ -9,7 +9,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "cms": "cd cms && npx next dev -p 3000",
+    "cms:seed": "cd cms && npx tsx seed/index.ts"
   },
   "dependencies": {
     "astro": "^6.0.4"

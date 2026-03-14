@@ -1,0 +1,163 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getDiningVenues, getDiningVenue } from '../../lib/payload';
+
+export async function getStaticPaths() {
+  try {
+    const venues = await getDiningVenues();
+    return venues.map((venue: any) => ({
+      params: { slug: venue.slug },
+      props: { venue },
+    }));
+  } catch {
+    return [{
+      params: { slug: 'six-seven-restaurant' },
+      props: { venue: null },
+    }];
+  }
+}
+
+const { venue } = Astro.props;
+
+// Fallback data
+const name = venue?.name || 'Six Seven Restaurant';
+const tagline = venue?.tagline || 'Signature Restaurant';
+const phone = venue?.phone || '206.269.4575';
+const email = venue?.email || 'dining@edgewaterhotel.com';
+const hours = venue?.hours || [
+  { label: 'Brunch', days: 'Sat & Sun', times: '7:00am - 2:00pm' },
+  { label: 'Dinner', days: 'Sun - Thurs', times: '5:30pm - 9:00pm' },
+  { label: 'Dinner', days: 'Fri & Sat', times: '5:30pm - 9:30pm' },
+  { label: 'Lounge', days: 'Mon - Fri', times: '3:00pm - 11:00pm' },
+  { label: 'Lounge', days: 'Sat & Sun', times: '11:00am - 11:00pm' },
+];
+const menuSections = venue?.menuSections || [
+  { heading: 'Light Fare', items: [
+    { name: 'Yogurt Parfait', description: 'house-made granola, berries', price: '$16' },
+    { name: 'Bagel & Cream Cheese', description: 'plain or everything', price: '$11' },
+  ]},
+  { heading: 'Handhelds', items: [
+    { name: 'Six Seven Burger', description: 'grass-fed beef, aged cheddar, chili remoulade', price: '$29' },
+    { name: 'Fish & Chips', description: 'beer-battered cod, tartar sauce', price: '$32' },
+  ]},
+];
+---
+
+<Layout
+  title={`${name} | Fine Dining in Seattle`}
+  description={`${name} offers seasonally inspired cuisine crafted with the freshest organic ingredients.`}
+  ogImage="https://admin.edgewaterhotel.com/content/uploads/2026/02/EdgewaterJune2024-1490.jpg"
+  transparentNav={true}
+>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="hero-bg">
+      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/02/EdgewaterJune2024-1490.jpg" alt={name} loading="eager" />
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <a href="/dine/" class="breadcrumb">&larr; All Dining</a>
+      <h1>{name}</h1>
+      <p>{name} is a premier waterfront dining destination in Seattle specializing in Pacific Northwest cuisine.</p>
+    </div>
+  </section>
+
+  <!-- Hours & Contact -->
+  <section class="section section-sand">
+    <div class="container">
+      <div class="hours-contact-grid">
+        <div>
+          <h2 style="margin-bottom: var(--space-md);">Hours & Reservations</h2>
+          <div class="hours-grid">
+            {hours.map((h: any) => (
+              <div class="hours-item">
+                <h4>{h.label}</h4>
+                <p>{h.days}<br/>{h.times}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="contact-box">
+          <h3>Contact</h3>
+          <p><a href={`tel:${phone.replace(/\./g, '')}`}>{phone}</a></p>
+          <p><a href={`mailto:${email}`}>{email}</a></p>
+          <a href="#" class="btn btn-primary" style="margin-top: var(--space-sm);">Book A Table</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <section class="section">
+    <div class="container">
+      <span class="label" style="color: var(--warm-gray);">Menu</span>
+      <h2 style="margin-top: 0.5rem; margin-bottom: var(--space-lg);">Menu Highlights</h2>
+      <div class="menu-columns">
+        {menuSections.map((section: any) => (
+          <div class="menu-section">
+            <h3>{section.heading}</h3>
+            {section.items.map((item: any) => (
+              <div class="menu-item">
+                <div>
+                  <div class="menu-item-name">{item.name}</div>
+                  {item.description && <div class="menu-item-desc">{item.description}</div>}
+                </div>
+                {item.price && <div class="menu-item-price">{item.price}</div>}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="section">
+    <div class="container">
+      <h2 style="margin-bottom: var(--space-md);">Gallery</h2>
+    </div>
+    <div class="gallery-strip">
+      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/02/Edge_Nov2024-6937.jpg" alt="Bar with fireplace" loading="lazy" />
+      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/02/Edgewater_May2024-9450.jpg" alt="Guests dining" loading="lazy" />
+      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/02/DSC04541.jpg" alt="Cocktails" loading="lazy" />
+      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/02/Asparagus-Fries-Fries-Tuna-Tacos-Aperol-Spritz-Barrel-Aged-Old-Fashioned-Aviation.jpg" alt="Food and drinks" loading="lazy" />
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .breadcrumb {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: var(--space-sm);
+  }
+  .breadcrumb:hover { color: #fff; }
+
+  .hours-contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .contact-box {
+    background: var(--white);
+    padding: var(--space-md);
+  }
+  .contact-box h3 { margin-bottom: var(--space-sm); }
+  .contact-box p { font-size: 0.95rem; margin-bottom: 0.3rem; }
+  .contact-box a { color: var(--charcoal); text-decoration: underline; text-underline-offset: 3px; }
+  .menu-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+  @media (max-width: 900px) {
+    .hours-contact-grid, .menu-columns { grid-template-columns: 1fr; }
+  }
+</style>

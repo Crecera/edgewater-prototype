@@ -1,10 +1,51 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { getRooms, getRoom } from '../../lib/payload';
+
+export async function getStaticPaths() {
+  try {
+    const rooms = await getRooms();
+    return rooms.map((room: any) => ({
+      params: { slug: room.slug },
+      props: { room },
+    }));
+  } catch {
+    // Fallback: if Payload is not running, generate the Beatles Suite page
+    return [{
+      params: { slug: 'beatles-suite' },
+      props: { room: null },
+    }];
+  }
+}
+
+const { room } = Astro.props;
+
+// Fallback data if Payload is not available
+const name = room?.name || 'Beatles Suite';
+const slug = room?.slug || 'beatles-suite';
+const category = room?.category || 'specialty';
+const sqft = room?.squareFeet || 750;
+const sleeps = room?.sleeps || 2;
+const shortDesc = room?.shortDescription || 'Relive a legendary moment in history and stay in the suite made famous by the iconic image of The Beatles fishing out of the window.';
+const amenities = room?.amenities || [
+  { name: 'Gas fireplace' },
+  { name: '50" Television & streaming entertainment' },
+  { name: 'Keurig coffee machine' },
+  { name: 'Refrigerator & Honor Bar' },
+  { name: 'Laptop-compatible in-room safe' },
+  { name: 'Down feather comforter' },
+  { name: 'In-room Wi-Fi' },
+  { name: 'Glass surround shower with waterfall & handheld heads' },
+  { name: 'Panoramic views of Elliott Bay' },
+  { name: 'State-of-the-art stereo with Beatles CD collection' },
+  { name: 'Living room, dining area and library' },
+];
+const tourUrl = room?.tourUrl || 'https://visitingmedia.com/tt8/?ttid=the-edgewater-hotel-icms/';
 ---
 
 <Layout
-  title="Beatles Suite | The Edgewater Hotel Seattle"
-  description="Relive a legendary moment in history and stay in the suite made famous by the iconic image of The Beatles' fishing out of the window."
+  title={`${name} | The Edgewater Hotel Seattle`}
+  description={shortDesc}
   ogImage="https://admin.edgewaterhotel.com/content/uploads/2026/01/nhh200-noble-house-edgewater-stay-beatles-3.jpg"
   transparentNav={true}
 >
@@ -14,18 +55,18 @@ import Layout from '../../layouts/Layout.astro';
     <div class="hero-bg">
       <img
         src="https://admin.edgewaterhotel.com/content/uploads/2025/12/b2-scaled.jpg"
-        alt="A pug in the Beatles suite"
+        alt={name}
         loading="eager"
       />
     </div>
     <div class="hero-overlay"></div>
     <div class="container hero-content">
       <a href="/stay/" class="breadcrumb">&larr; All Rooms</a>
-      <h1>Beatles Suite</h1>
+      <h1>{name}</h1>
       <div class="room-meta" style="margin-top: var(--space-sm);">
-        <span>Over-Water</span>
-        <span>Sleeps 2</span>
-        <span>750 sq ft</span>
+        <span>{category === 'over-water' ? 'Over-Water' : category === 'city-view' ? 'City View' : 'Specialty'}</span>
+        <span>Sleeps {sleeps}</span>
+        <span>{sqft} sq ft</span>
       </div>
     </div>
   </section>
@@ -34,12 +75,12 @@ import Layout from '../../layouts/Layout.astro';
   <section class="section">
     <div class="container room-content-grid">
       <div class="room-description">
-        <p class="lead">Step into a piece of rock history in this storied one-bedroom suite, famously connected to The Beatles' visit to Seattle and their iconic "Yesterday" fishing photo.</p>
+        <p class="lead">{shortDesc}</p>
         <p>Full panoramic views of Elliott Bay create a striking backdrop, while the plush king bed ensures a restful and comfortable stay. The studio-style living room offers generous space with its library, dining area and gas fireplace, creating a welcoming setting for relaxation or entertaining.</p>
         <p>Music lovers will appreciate the state-of-the-art stereo system paired with a curated Beatles CD collection. The bathroom features a glass-surround shower with both waterfall and handheld shower heads, along with a spacious bathtub for unwinding after a day in the city.</p>
         <div class="room-ctas">
-          <a href="#" class="btn btn-primary">Check Availability</a>
-          <a href="#" class="btn btn-outline">Take a 360&deg; Tour</a>
+          <a href="https://www.edgewaterhotel.com/#/booking/step-1" class="btn btn-primary" target="_blank" rel="noopener">Check Availability</a>
+          <a href={tourUrl} class="btn btn-outline" target="_blank" rel="noopener">Take a 360&deg; Tour</a>
         </div>
       </div>
 
@@ -58,19 +99,8 @@ import Layout from '../../layouts/Layout.astro';
     <div class="container">
       <span class="label">In Your Suite</span>
       <h2 style="margin-top: 0.5rem; margin-bottom: var(--space-md);">Special Touches</h2>
-      <p style="margin-bottom: var(--space-lg); color: var(--warm-gray);">Wake up to a fresh coffee from your in-room Keurig or The Brim Coffee Shop downstairs, and enjoy the views of either the city or the water. Bring each day to a close in front of your gas burning fireplace before climbing into bed and getting cozy underneath a luxurious down feather duvet.</p>
       <ul class="room-detail-amenities">
-        <li>Gas fireplace</li>
-        <li>50" Television & streaming entertainment</li>
-        <li>Keurig coffee machine</li>
-        <li>Refrigerator & Honor Bar</li>
-        <li>Laptop-compatible in-room safe</li>
-        <li>Down feather comforter</li>
-        <li>In-room Wi-Fi</li>
-        <li>Glass surround shower with waterfall & handheld heads</li>
-        <li>Panoramic views of Elliott Bay</li>
-        <li>State-of-the-art stereo with Beatles CD collection</li>
-        <li>Living room, dining area and library</li>
+        {amenities.map((a: any) => <li>{a.name}</li>)}
       </ul>
     </div>
   </section>
@@ -81,26 +111,22 @@ import Layout from '../../layouts/Layout.astro';
       <h2 style="margin-bottom: var(--space-md);">Take a Look Inside</h2>
     </div>
     <div class="gallery-strip">
-      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/Edgewater_Dockside_LgBalcony.jpg" alt="Balcony overlooking the water with lounge chairs" loading="lazy" />
-      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/nhh200-noble-house-edgewater-stay-beatles-5.jpg" alt="Beatles suite round table, fireplace, and lounge space" loading="lazy" />
-      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/nhh200-noble-house-edgewater-stay-beatles-4.jpg" alt="Bright Beatles-inspired bedroom" loading="lazy" />
-      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/nhh200-noble-house-edgewater-stay-beatles-2.jpg" alt="Beatles suite lounge space and bedroom" loading="lazy" />
+      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/Edgewater_Dockside_LgBalcony.jpg" alt="Balcony overlooking the water" loading="lazy" />
+      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/nhh200-noble-house-edgewater-stay-beatles-5.jpg" alt="Beatles suite lounge" loading="lazy" />
+      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/nhh200-noble-house-edgewater-stay-beatles-4.jpg" alt="Beatles-inspired bedroom" loading="lazy" />
+      <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/nhh200-noble-house-edgewater-stay-beatles-2.jpg" alt="Beatles suite overview" loading="lazy" />
     </div>
   </section>
 
   <!-- Offers CTA -->
   <section class="cta-banner">
     <div class="hero-bg">
-      <img
-        src="https://admin.edgewaterhotel.com/content/uploads/2025/12/nhh200-noble-house-edgewater-offers3.jpg"
-        alt="Lounge area at The Edgewater with water view and fireplace"
-        loading="lazy"
-      />
+      <img src="https://admin.edgewaterhotel.com/content/uploads/2025/12/nhh200-noble-house-edgewater-offers3.jpg" alt="Lounge at The Edgewater" loading="lazy" />
     </div>
     <div class="hero-overlay"></div>
     <div class="container cta-banner-content">
       <h2>Offers & Packages</h2>
-      <p>Add exclusive packages and special offers to your stay in the Emerald City, each carefully designed to help you make the most of your time in Seattle.</p>
+      <p>Add exclusive packages and special offers to your stay in the Emerald City.</p>
       <a href="#" class="btn btn-sand">View All Offers</a>
     </div>
   </section>
@@ -158,11 +184,7 @@ import Layout from '../../layouts/Layout.astro';
   }
 
   @media (max-width: 900px) {
-    .room-content-grid {
-      grid-template-columns: 1fr;
-    }
-    .room-sidebar {
-      position: static;
-    }
+    .room-content-grid { grid-template-columns: 1fr; }
+    .room-sidebar { position: static; }
   }
 </style>
