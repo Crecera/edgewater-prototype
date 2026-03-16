@@ -6,4 +6,5 @@ dist/
 cms/node_modules/
 cms/data/
 cms/.next/
+cms/.open-next/
 cms/payload-types.ts

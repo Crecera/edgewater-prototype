@@ -3,7 +3,7 @@
  * Fetches from Payload REST API and returns typed data.
  */
 
-const PAYLOAD_URL = import.meta.env.PAYLOAD_URL || 'http://localhost:3000';
+const PAYLOAD_URL = import.meta.env.PAYLOAD_URL || 'http://localhost:3002';
 
 async function fetchAPI(endpoint: string) {
   const res = await fetch(`${PAYLOAD_URL}/api${endpoint}`);
