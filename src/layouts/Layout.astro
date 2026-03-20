@@ -10,33 +10,89 @@ interface Props {
 const { title, description, ogImage = 'https://admin.edgewaterhotel.com/content/uploads/2025/12/The-Edgewater-Hotel-Seattle-WA-1.jpg', schema, transparentNav = false } = Astro.props;
 const currentPath = Astro.url.pathname;
 
-const nobleHouseProperties = [
-  { name: 'Argonaut Hotel', url: 'https://www.argonauthotel.com' },
-  { name: 'Chatham Inn', url: 'https://www.chathaminn.com' },
-  { name: 'Corazón Cabo', url: 'https://www.corazoncabo.com' },
-  { name: 'Estancia La Jolla', url: 'https://www.estancialajolla.com' },
-  { name: 'Gateway Canyons', url: 'https://www.gatewaycanyons.com' },
-  { name: "Hart's Camp", url: 'https://www.hartscamp.com' },
-  { name: 'Headlands Lodge', url: 'https://www.headlandslodge.com' },
-  { name: 'Hotel Portofino', url: 'https://www.hotelportofino.com' },
-  { name: 'Hotel Terra', url: 'https://www.hotelterrajacksonhole.com' },
-  { name: 'Inn at Cape Kiwanda', url: 'https://www.innatcapekiwanda.com' },
-  { name: 'Inn on Fifth', url: 'https://www.innonfifth.com' },
-  { name: 'Jekyll Island Club', url: 'https://www.jekyllclub.com' },
-  { name: 'LaPlaya Resort', url: 'https://www.laplayaresort.com' },
-  { name: "L'Auberge Del Mar", url: 'https://www.laubergedelmar.com' },
-  { name: 'Little Palm Island', url: 'https://www.littlepalmisland.com' },
-  { name: 'Marquesa Hotel', url: 'https://www.marquesa.com' },
-  { name: 'Mission Bay Resort', url: 'https://www.missionbayresort.com' },
-  { name: 'Ocean Key Resort', url: 'https://www.oceankey.com' },
-  { name: 'Pelican Beach Resort', url: 'https://www.pelicanbeach.com' },
-  { name: 'Resort Kona Kai', url: 'https://www.resortkonakai.com' },
-  { name: 'River Terrace Inn', url: 'https://www.riverterraceinn.com' },
-  { name: 'Snake River Sporting Club', url: 'https://www.snakeriversportingclub.com' },
-  { name: 'Solé Miami', url: 'https://www.solemiami.com' },
-  { name: 'Teton Lodge', url: 'https://www.tetonlodge.com' },
-  { name: 'The Stella Hotel', url: 'https://www.thestellahotel.com' },
-  { name: 'Napa Valley Wine Train', url: 'https://www.winetrain.com' },
+// Noble House properties organised by state/region
+const nobleHouseByRegion = [
+  {
+    region: 'California',
+    properties: [
+      { name: "L'Auberge Del Mar", url: 'https://www.laubergedelmar.com' },
+      { name: 'Estancia La Jolla', url: 'https://www.estancialajolla.com' },
+      { name: 'Mission Bay Resort', url: 'https://www.missionbayresort.com' },
+      { name: 'Resort Kona Kai', url: 'https://www.resortkonakai.com' },
+      { name: 'Napa Valley Wine Train', url: 'https://www.winetrain.com' },
+    ],
+  },
+  {
+    region: 'Colorado',
+    properties: [
+      { name: 'Gateway Canyons', url: 'https://www.gatewaycanyons.com' },
+    ],
+  },
+  {
+    region: 'Florida',
+    properties: [
+      { name: 'Little Palm Island', url: 'https://www.littlepalmisland.com' },
+      { name: 'Marquesa Hotel', url: 'https://www.marquesa.com' },
+      { name: 'Ocean Key Resort', url: 'https://www.oceankey.com' },
+      { name: 'Pelican Beach Resort', url: 'https://www.pelicanbeach.com' },
+      { name: 'Solé Miami', url: 'https://www.solemiami.com' },
+      { name: 'Hotel Portofino', url: 'https://www.hotelportofino.com' },
+    ],
+  },
+  {
+    region: 'Georgia',
+    properties: [
+      { name: 'Jekyll Island Club', url: 'https://www.jekyllclub.com' },
+    ],
+  },
+  {
+    region: 'Massachusetts',
+    properties: [
+      { name: 'Chatham Inn', url: 'https://www.chathaminn.com' },
+    ],
+  },
+  {
+    region: 'Mexico',
+    properties: [
+      { name: 'Corazón Cabo', url: 'https://www.corazoncabo.com' },
+    ],
+  },
+  {
+    region: 'Oregon',
+    properties: [
+      { name: 'Headlands Lodge', url: 'https://www.headlandslodge.com' },
+      { name: 'Inn at Cape Kiwanda', url: 'https://www.innatcapekiwanda.com' },
+    ],
+  },
+  {
+    region: 'Texas',
+    properties: [
+      { name: 'The Stella Hotel', url: 'https://www.thestellahotel.com' },
+    ],
+  },
+  {
+    region: 'Washington',
+    properties: [
+      { name: 'Argonaut Hotel', url: 'https://www.argonauthotel.com' },
+      { name: 'River Terrace Inn', url: 'https://www.riverterraceinn.com' },
+    ],
+  },
+  {
+    region: 'Wyoming',
+    properties: [
+      { name: "Hart's Camp", url: 'https://www.hartscamp.com' },
+      { name: 'Hotel Terra', url: 'https://www.hotelterrajacksonhole.com' },
+      { name: 'Snake River Sporting Club', url: 'https://www.snakeriversportingclub.com' },
+      { name: 'Teton Lodge', url: 'https://www.tetonlodge.com' },
+    ],
+  },
+  {
+    region: 'Naples, FL',
+    properties: [
+      { name: 'Inn on Fifth', url: 'https://www.innonfifth.com' },
+      { name: 'LaPlaya Resort', url: 'https://www.laplayaresort.com' },
+    ],
+  },
 ];
 
 const hotelSchema = JSON.stringify({
@@ -94,8 +150,10 @@ const hotelSchema = JSON.stringify({
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://www.edgewaterhotel.com/_next/static/media/favicon.6571601d.png" />
 
-  <!-- Adobe Typekit — Meno Display -->
-  <link rel="stylesheet" href="https://use.typekit.net/hbk5hzc.css" />
+  <!-- Cormorant Display (heading serif — dev substitute for Meno Display/Typekit hbk5hzc) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" />
 
   <!-- Hotel Schema -->
   <script type="application/ld+json" set:html={hotelSchema} />
@@ -119,52 +177,88 @@ const hotelSchema = JSON.stringify({
   <!-- Mobile Nav Toggle (CSS-only) -->
   <input type="checkbox" id="mobile-nav-toggle" class="mobile-nav-checkbox" aria-hidden="true" />
 
-  <!-- Navigation -->
-  <header class:list={['site-nav', { 'nav-scrolled': !transparentNav }]}>
-    <div class="nav-inner">
-      <a href="/" class="nav-logo" aria-label="The Edgewater Hotel — Home">
-        <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/20160718_TE_logo_white-287x66.png" alt="The Edgewater Hotel" class="nav-logo-white" width="200" height="46" />
-        <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/20160718_TE_logo_white-287x66.png" alt="The Edgewater Hotel" class="nav-logo-dark" width="200" height="46" />
-      </a>
+  <!-- ============================================================
+       HEADER — 2-row structure matching edgewaterhotel.com
+       Row 1 (top bar): secondary nav | wordmark | Reserve
+       Row 2 (main nav): Stay | Dine | Explore | Gather | Offers
+       ============================================================ -->
+  <header class:list={['site-nav', { 'nav-transparent': transparentNav, 'nav-solid': !transparentNav }]}>
 
-      <nav class="nav-links" aria-label="Main navigation">
-        <a href="/stay/" class:list={[{ active: currentPath.startsWith('/stay') }]}>Stay</a>
-        <a href="/dine/" class:list={[{ active: currentPath.startsWith('/dine') }]}>Dine</a>
-        <a href="#" class="nav-disabled">Explore</a>
-        <a href="#" class="nav-disabled">Gather</a>
-        <a href="#" class="nav-disabled">Offers</a>
-        <a href="#" class="nav-disabled">About</a>
-      </nav>
+    <!-- Top bar -->
+    <div class="nav-top-bar">
+      <div class="nav-top-inner">
 
-      <div class="nav-actions">
-        <a href="tel:206.792.5959" class="nav-phone">206.792.5959</a>
-        <a href="https://www.edgewaterhotel.com/#/booking/step-1" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Book Now</a>
-        <label for="mobile-nav-toggle" class="hamburger" aria-label="Open menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </label>
+        <!-- Secondary nav (left) -->
+        <nav class="nav-secondary" aria-label="Secondary navigation">
+          <a href="/about/">About</a>
+          <a href="/gallery/">Gallery</a>
+          <a href="/property-map/">Property Map</a>
+        </nav>
+
+        <!-- Wordmark (center) -->
+        <a href="/" class="nav-wordmark" aria-label="The Edgewater Hotel — Home">
+          <span class="wordmark-name">The Edgewater</span>
+          <span class="wordmark-sub">a noble house hotel</span>
+        </a>
+
+        <!-- Reserve + hamburger (right) -->
+        <div class="nav-top-actions">
+          <a
+            href="https://www.edgewaterhotel.com/#/booking/step-1"
+            class="nav-reserve-btn"
+            target="_blank"
+            rel="noopener"
+          >Reserve</a>
+          <label for="mobile-nav-toggle" class="hamburger" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </label>
+        </div>
+
       </div>
     </div>
+
+    <!-- Main nav row -->
+    <div class="nav-main-row">
+      <nav class="nav-primary" aria-label="Main navigation">
+        <a href="/stay/" class:list={[{ active: currentPath.startsWith('/stay') }]}>Stay</a>
+        <a href="/dine/" class:list={[{ active: currentPath.startsWith('/dine') }]}>Dine</a>
+        <a href="/explore/" class:list={[{ active: currentPath.startsWith('/explore') }]}>Explore</a>
+        <a href="/gather/" class:list={[{ active: currentPath.startsWith('/gather') }]}>Gather</a>
+        <a href="/offers/" class:list={[{ active: currentPath.startsWith('/offers') }]}>Offers</a>
+      </nav>
+    </div>
+
   </header>
 
   <!-- Mobile Nav Drawer -->
   <div class="mobile-nav-drawer">
     <div class="mobile-nav-header">
-      <span class="logo-text">The Edgewater</span>
+      <div class="mobile-wordmark">
+        <span class="wordmark-name">The Edgewater</span>
+        <span class="wordmark-sub">a noble house hotel</span>
+      </div>
       <label for="mobile-nav-toggle" class="mobile-nav-close" aria-label="Close menu">&times;</label>
     </div>
     <nav class="mobile-nav-links">
       <a href="/stay/">Stay</a>
       <a href="/dine/">Dine</a>
-      <a href="#">Explore</a>
-      <a href="#">Gather</a>
-      <a href="#">Offers</a>
-      <a href="#">About</a>
+      <a href="/explore/">Explore</a>
+      <a href="/gather/">Gather</a>
+      <a href="/offers/">Offers</a>
+      <a href="/about/">About</a>
+      <a href="/gallery/">Gallery</a>
+      <a href="/property-map/">Property Map</a>
     </nav>
     <div class="mobile-nav-footer">
-      <a href="tel:206.792.5959" class="mobile-nav-phone">206.792.5959</a>
-      <a href="https://www.edgewaterhotel.com/#/booking/step-1" class="btn btn-primary" target="_blank" rel="noopener" style="width: 100%; justify-content: center;">Book Now</a>
+      <a href="tel:206.728.7000" class="mobile-nav-phone">206.728.7000</a>
+      <a
+        href="https://www.edgewaterhotel.com/#/booking/step-1"
+        class="mobile-nav-reserve"
+        target="_blank"
+        rel="noopener"
+      >Reserve</a>
     </div>
   </div>
   <label for="mobile-nav-toggle" class="mobile-nav-backdrop"></label>
@@ -173,15 +267,22 @@ const hotelSchema = JSON.stringify({
     <slot />
   </main>
 
-  <!-- Noble House Portfolio Strip -->
-  <section class="portfolio-strip">
-    <div class="portfolio-inner">
-      <a href="https://www.noblehousehotels.com" class="portfolio-brand" target="_blank" rel="noopener">
-        Noble House Hotels & Resorts
+  <!-- Noble House Portfolio — by state/region -->
+  <section class="noble-house-section">
+    <div class="noble-house-inner">
+      <a href="https://www.noblehousehotels.com" class="noble-house-brand" target="_blank" rel="noopener">
+        Noble House Hotels &amp; Resorts
       </a>
-      <div class="portfolio-scroll">
-        {nobleHouseProperties.map(p => (
-          <a href={p.url} target="_blank" rel="noopener" class="portfolio-link">{p.name}</a>
+      <div class="noble-house-grid">
+        {nobleHouseByRegion.map(group => (
+          <div class="noble-region">
+            <span class="noble-region-label">{group.region}</span>
+            <ul>
+              {group.properties.map(p => (
+                <li><a href={p.url} target="_blank" rel="noopener">{p.name}</a></li>
+              ))}
+            </ul>
+          </div>
         ))}
       </div>
     </div>
@@ -189,72 +290,109 @@ const hotelSchema = JSON.stringify({
 
   <!-- Footer -->
   <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <img src="https://admin.edgewaterhotel.com/content/uploads/2026/01/20160718_TE_logo_white-287x66.png" alt="The Edgewater Hotel" class="footer-logo" width="200" height="46" />
-          <p class="footer-tagline">Seattle's only over-water hotel. Where rock 'n' roll legacy meets Pacific Northwest beauty.</p>
-          <div class="footer-contact">
+    <div class="footer-inner">
+
+      <!-- Top: logo + address | nav columns | social -->
+      <div class="footer-top">
+
+        <!-- Left: logo + address + phones -->
+        <div class="footer-address-col">
+          <a href="/" class="footer-logo-link" aria-label="The Edgewater Hotel">
+            <img
+              src="https://admin.edgewaterhotel.com/content/uploads/2026/01/20160718_TE_logo_white-287x66.png"
+              alt="The Edgewater Hotel"
+              class="footer-logo"
+              width="200"
+              height="46"
+            />
+          </a>
+          <address class="footer-address">
             <p>2411 Alaskan Way, Pier 67</p>
             <p>Seattle, WA 98121</p>
-            <p><a href="tel:1-206-728-7000">1-206-728-7000</a></p>
-            <p><a href="mailto:info@edgewaterhotel.com">info@edgewaterhotel.com</a></p>
+            <p><a href="tel:2067287000">206.728.7000</a></p>
+            <p><a href="tel:8888904525">888.890.4525</a></p>
+          </address>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/edgewaterhotel" target="_blank" rel="noopener" aria-label="Facebook">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/edgewaterhotel" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
           </div>
         </div>
 
-        <div class="footer-col">
+        <!-- Center: Stay + Dine nav -->
+        <div class="footer-nav-col">
           <h4>Stay</h4>
           <ul>
-            <li><a href="/stay/">Rooms & Suites</a></li>
+            <li><a href="/stay/">Rooms &amp; Suites</a></li>
             <li><a href="/stay/beatles-suite/">Beatles Suite</a></li>
-            <li><a href="#">Pearl Jam Suite</a></li>
-            <li><a href="#">Offers & Packages</a></li>
+            <li><a href="/stay/pearl-jam-suite/">Pearl Jam Suite</a></li>
+            <li><a href="/offers/">Offers &amp; Packages</a></li>
+            <li><a href="/stay/amenities/">Amenities</a></li>
           </ul>
         </div>
 
-        <div class="footer-col">
+        <div class="footer-nav-col">
           <h4>Dine</h4>
           <ul>
             <li><a href="/dine/six-seven-restaurant/">Six Seven Restaurant</a></li>
-            <li><a href="#">The Brim Coffee Shop</a></li>
-            <li><a href="#">Lobby Bar</a></li>
-            <li><a href="#">Menus</a></li>
+            <li><a href="/dine/the-brim/">The Brim</a></li>
+            <li><a href="/dine/lobby-bar/">Lobby Bar</a></li>
+            <li><a href="/dine/six-seven-restaurant/#menus">Menus</a></li>
+            <li><a href="/dine/six-seven-restaurant/#reservations">Reservations</a></li>
           </ul>
         </div>
 
-        <div class="footer-col">
+        <!-- Right: Explore + Gather + About nav -->
+        <div class="footer-nav-col">
           <h4>Explore</h4>
           <ul>
-            <li><a href="#">Things To Do</a></li>
-            <li><a href="#">Space Needle</a></li>
-            <li><a href="#">Pike Place Market</a></li>
-            <li><a href="#">Getting Here</a></li>
+            <li><a href="/explore/">Things To Do</a></li>
+            <li><a href="/explore/pike-place-market/">Pike Place Market</a></li>
+            <li><a href="/explore/space-needle/">Space Needle</a></li>
+            <li><a href="/explore/getting-here/">Getting Here</a></li>
           </ul>
+        </div>
+
+        <div class="footer-nav-col">
+          <h4>Gather</h4>
+          <ul>
+            <li><a href="/gather/">Meetings &amp; Events</a></li>
+            <li><a href="/gather/weddings/">Weddings</a></li>
+            <li><a href="/gather/catering/">Catering</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="footer-bottom">
+        <p>&copy; {new Date().getFullYear()} The Edgewater Hotel. A Noble House Hotel. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="/privacy-policy/">Privacy Policy</a>
+          <a href="/terms/">Terms of Use</a>
+          <a href="/accessibility/">Accessibility</a>
         </div>
       </div>
 
-      <div class="footer-bottom">
-        <p>&copy; 2026 The Edgewater Hotel. A Noble House Hotel. All rights reserved.</p>
-        <div class="footer-legal">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Accessibility</a>
-        </div>
-      </div>
     </div>
   </footer>
 
-  <!-- Scroll-aware nav (only on pages with transparent nav) -->
+  <!-- Scroll-aware nav -->
   <script is:inline define:vars={{ transparentNav }}>
     (function() {
       if (!transparentNav) return;
       var nav = document.querySelector('.site-nav');
-      var threshold = 80;
+      var threshold = 60;
       function onScroll() {
         if (window.scrollY > threshold) {
-          nav.classList.add('nav-scrolled');
+          nav.classList.remove('nav-transparent');
+          nav.classList.add('nav-solid');
         } else {
-          nav.classList.remove('nav-scrolled');
+          nav.classList.add('nav-transparent');
+          nav.classList.remove('nav-solid');
         }
       }
       window.addEventListener('scroll', onScroll, { passive: true });
@@ -277,11 +415,126 @@ const hotelSchema = JSON.stringify({
 </style>
 
 <style>
-  /* --- Mobile Nav (CSS-only) --- */
-  .mobile-nav-checkbox {
-    display: none;
+  /* ============================================================
+     HEADER
+     ============================================================ */
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
   }
 
+  .site-nav.nav-transparent {
+    background: transparent;
+  }
+
+  .site-nav.nav-solid {
+    background: var(--sand-dark);
+    box-shadow: 0 1px 8px rgba(0,0,0,0.1);
+  }
+
+  /* --- Top bar --- */
+  .nav-top-bar {
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  .nav-solid .nav-top-bar {
+    border-bottom-color: rgba(26,26,25,0.12);
+  }
+
+  .nav-top-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Secondary nav (About / Gallery / Property Map) */
+  .nav-secondary {
+    display: flex;
+    gap: var(--space-md);
+  }
+  .nav-secondary a {
+    font-family: var(--font-body);
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    color: rgba(255,255,255,0.8);
+    transition: color 0.3s;
+  }
+  .nav-secondary a:hover { color: var(--white); }
+  .nav-solid .nav-secondary a { color: rgba(26,26,25,0.65); }
+  .nav-solid .nav-secondary a:hover { color: var(--charcoal); }
+
+  /* Wordmark (centre) */
+  .nav-wordmark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    line-height: 1;
+    text-decoration: none;
+    gap: 3px;
+  }
+  .wordmark-name {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    transition: color 0.4s;
+  }
+  .wordmark-sub {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: lowercase;
+    color: rgba(255,255,255,0.65);
+    transition: color 0.4s;
+  }
+  .nav-solid .wordmark-name { color: var(--charcoal); }
+  .nav-solid .wordmark-sub { color: var(--warm-gray); }
+
+  /* Reserve button (top bar) */
+  .nav-top-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .nav-reserve-btn {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    padding: 0.45rem 1.2rem;
+    border: 1px solid rgba(255,255,255,0.5);
+    transition: all 0.25s ease-in-out;
+    white-space: nowrap;
+  }
+  .nav-reserve-btn:hover {
+    background: rgba(255,255,255,0.15);
+    color: var(--white);
+    border-color: rgba(255,255,255,0.8);
+  }
+  .nav-solid .nav-reserve-btn {
+    color: var(--charcoal);
+    border-color: var(--charcoal);
+  }
+  .nav-solid .nav-reserve-btn:hover {
+    background: var(--charcoal);
+    color: var(--white);
+  }
+
+  /* Hamburger */
   .hamburger {
     display: none;
     flex-direction: column;
@@ -289,68 +542,107 @@ const hotelSchema = JSON.stringify({
     cursor: pointer;
     padding: 4px;
   }
-
   .hamburger span {
     display: block;
     width: 22px;
-    height: 2px;
-    background: var(--charcoal);
+    height: 1.5px;
+    background: rgba(255,255,255,0.9);
     transition: all 0.3s ease;
   }
+  .nav-solid .hamburger span { background: var(--charcoal); }
+
+  /* --- Main nav row --- */
+  .nav-main-row {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-primary {
+    display: flex;
+    gap: var(--space-2xl);
+  }
+
+  .nav-primary a {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    color: rgba(255,255,255,0.9);
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.3s, border-color 0.2s;
+  }
+  .nav-primary a:hover,
+  .nav-primary a.active {
+    color: var(--white);
+    border-bottom-color: rgba(255,255,255,0.6);
+  }
+  .nav-solid .nav-primary a { color: var(--charcoal); }
+  .nav-solid .nav-primary a:hover,
+  .nav-solid .nav-primary a.active {
+    border-bottom-color: var(--charcoal);
+  }
+
+  /* ============================================================
+     MOBILE NAV
+     ============================================================ */
+  .mobile-nav-checkbox { display: none; }
 
   .mobile-nav-drawer {
     position: fixed;
     top: 0;
-    right: -320px;
-    width: 320px;
+    right: -100%;
+    width: min(360px, 90vw);
     height: 100vh;
     background: var(--white);
     z-index: 200;
     transition: right 0.35s ease;
     display: flex;
     flex-direction: column;
-    box-shadow: -4px 0 30px rgba(0,0,0,0.1);
+    box-shadow: -4px 0 30px rgba(0,0,0,0.12);
   }
 
   .mobile-nav-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.45);
     z-index: 199;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.35s ease;
   }
 
-  .mobile-nav-checkbox:checked ~ .mobile-nav-drawer {
-    right: 0;
-  }
-
+  .mobile-nav-checkbox:checked ~ .mobile-nav-drawer { right: 0; }
   .mobile-nav-checkbox:checked ~ .mobile-nav-backdrop {
     opacity: 1;
     pointer-events: auto;
-  }
-
-  .mobile-nav-checkbox:checked ~ .site-nav .hamburger span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-  .mobile-nav-checkbox:checked ~ .site-nav .hamburger span:nth-child(2) {
-    opacity: 0;
-  }
-  .mobile-nav-checkbox:checked ~ .site-nav .hamburger span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
   }
 
   .mobile-nav-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--space-md) var(--space-md);
+    padding: 1.25rem var(--space-md);
     border-bottom: 1px solid var(--sand-dark);
   }
 
-  .mobile-nav-header .logo-text {
-    font-size: 1.2rem;
+  .mobile-wordmark {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .mobile-wordmark .wordmark-name {
+    color: var(--charcoal);
+    font-size: 15px;
+  }
+  .mobile-wordmark .wordmark-sub {
+    color: var(--warm-gray);
+    font-size: 10px;
   }
 
   .mobile-nav-close {
@@ -363,17 +655,17 @@ const hotelSchema = JSON.stringify({
 
   .mobile-nav-links {
     flex: 1;
-    padding: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
   }
-
   .mobile-nav-links a {
-    padding: 0.9rem 0;
-    font-size: 1.05rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    padding: 0.85rem 0;
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.03em;
     border-bottom: 1px solid var(--cream);
     color: var(--charcoal);
   }
@@ -385,271 +677,171 @@ const hotelSchema = JSON.stringify({
     flex-direction: column;
     gap: var(--space-sm);
   }
-
   .mobile-nav-phone {
     text-align: center;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--warm-gray);
+    letter-spacing: 0.05em;
   }
+  .mobile-nav-reserve {
+    display: block;
+    text-align: center;
+    background: var(--charcoal);
+    color: var(--white);
+    padding: 0.85rem;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: background 0.25s;
+  }
+  .mobile-nav-reserve:hover { background: #333; }
 
   @media (max-width: 900px) {
     .hamburger { display: flex; }
+    .nav-secondary { display: none; }
+    .nav-main-row { display: none; }
   }
 
-  /* --- Navigation (transparent → sand on scroll) --- */
-  .site-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    background: transparent;
-    height: var(--nav-height);
-    transition: background-color 0.4s ease, box-shadow 0.4s ease;
-  }
-
-  .site-nav.nav-scrolled {
-    background: var(--sand-dark);
-    box-shadow: 0 1px 8px rgba(0,0,0,0.08);
-  }
-
-  .nav-inner {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 var(--space-md);
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    line-height: 1;
-  }
-
-  .nav-logo img {
-    height: 46px;
-    width: auto;
-    transition: opacity 0.4s ease, filter 0.4s ease;
-  }
-
-  /* White logo visible by default (over hero video) */
-  .nav-logo-white {
-    display: block;
-  }
-  .nav-logo-dark {
-    display: none;
-    filter: brightness(0) saturate(100%) invert(8%) sepia(5%) saturate(468%) hue-rotate(22deg);
-  }
-
-  /* When scrolled: swap to dark logo */
-  .nav-scrolled .nav-logo-white { display: none; }
-  .nav-scrolled .nav-logo-dark { display: block; }
-
-  .nav-links {
-    display: flex;
-    gap: var(--space-lg);
-  }
-
-  .nav-links a {
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.9);
-    padding: 0.5rem 0;
-    border-bottom: 2px solid transparent;
-    transition: color 0.4s ease, border-color 0.2s;
-  }
-
-  .nav-scrolled .nav-links a {
-    color: var(--charcoal);
-  }
-
-  .nav-links a.active {
-    border-bottom-color: currentColor;
-  }
-
-  .nav-links a:hover {
-    border-bottom-color: currentColor;
-    opacity: 0.8;
-  }
-
-  .nav-links a.nav-disabled {
-    opacity: 0.4;
-    cursor: default;
-    pointer-events: none;
-  }
-
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-  }
-
-  .nav-phone {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.8);
-    letter-spacing: 0.03em;
-    transition: color 0.4s ease;
-  }
-
-  .nav-scrolled .nav-phone {
-    color: var(--warm-gray);
-  }
-
-  .btn-sm {
-    padding: 0.6rem 1.4rem;
-    font-size: 0.75rem;
-  }
-
-  /* Nav Book Now button: outline white on hero, solid dark when scrolled */
-  .nav-actions .btn-primary {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.6);
-    color: #fff;
-    transition: all 0.4s ease;
-  }
-
-  .nav-scrolled .nav-actions .btn-primary {
-    background: var(--charcoal);
-    border-color: var(--charcoal);
-    color: #fff;
-  }
-
-  /* Hamburger: white on hero, dark when scrolled */
-  .hamburger span {
-    background: #fff;
-    transition: background 0.4s ease;
-  }
-  .nav-scrolled .hamburger span {
-    background: var(--charcoal);
-  }
-
-  main {
-    /* No margin-top — hero sits behind transparent nav */
-  }
-
-  @media (max-width: 900px) {
-    .nav-links { display: none; }
-    .nav-phone { display: none; }
-  }
-
-  /* --- Noble House Portfolio Strip --- */
-  .portfolio-strip {
+  /* ============================================================
+     NOBLE HOUSE PORTFOLIO
+     ============================================================ */
+  .noble-house-section {
     background: #111110;
-    padding: var(--space-sm) 0;
-    overflow: hidden;
+    padding: var(--space-xl) 0;
   }
 
-  .portfolio-inner {
+  .noble-house-inner {
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 0 var(--space-md);
-    display: flex;
-    align-items: center;
-    gap: var(--space-lg);
   }
 
-  .portfolio-brand {
+  .noble-house-brand {
+    display: block;
     font-family: var(--font-heading);
-    font-size: 0.8rem;
-    color: rgba(255,255,255,0.5);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .portfolio-scroll {
-    display: flex;
-    gap: var(--space-md);
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    padding: 0.3rem 0;
-  }
-
-  .portfolio-scroll::-webkit-scrollbar { display: none; }
-
-  .portfolio-link {
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.35);
-    white-space: nowrap;
-    transition: color 0.2s;
-    flex-shrink: 0;
+    margin-bottom: var(--space-lg);
+  }
+  .noble-house-brand:hover { color: rgba(255,255,255,0.6); }
+
+  .noble-house-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg) var(--space-2xl);
   }
 
-  .portfolio-link:hover { color: rgba(255,255,255,0.7); }
+  .noble-region {
+    min-width: 140px;
+  }
 
-  /* --- Footer --- */
+  .noble-region-label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    margin-bottom: 0.5rem;
+  }
+
+  .noble-region ul { list-style: none; padding: 0; margin: 0; }
+  .noble-region li { margin-bottom: 0.3rem; }
+  .noble-region a {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: rgba(255,255,255,0.5);
+    transition: color 0.2s;
+  }
+  .noble-region a:hover { color: rgba(255,255,255,0.85); }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
   .site-footer {
     background: var(--charcoal);
     color: var(--white);
     padding: var(--space-2xl) 0 var(--space-lg);
   }
 
-  .footer-grid {
+  .footer-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+  }
+
+  .footer-top {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
     gap: var(--space-xl);
     margin-bottom: var(--space-xl);
   }
 
+  /* Address column */
   .footer-logo {
     height: 46px;
     width: auto;
-    margin-bottom: var(--space-xs);
+    margin-bottom: var(--space-md);
+    display: block;
   }
 
-  .footer-tagline {
-    margin-top: var(--space-sm);
-    color: var(--warm-gray);
-    font-size: 0.9rem;
-    line-height: 1.7;
-    max-width: 30ch;
+  .footer-address {
+    font-style: normal;
   }
+  .footer-address p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.9;
+    max-width: none;
+  }
+  .footer-address a {
+    color: rgba(255,255,255,0.55);
+    transition: color 0.2s;
+  }
+  .footer-address a:hover { color: var(--white); }
 
-  .footer-contact {
+  .footer-social {
+    display: flex;
+    gap: var(--space-sm);
     margin-top: var(--space-md);
   }
-
-  .footer-contact p {
-    font-size: 0.85rem;
-    color: var(--warm-gray);
-    line-height: 1.8;
+  .footer-social a {
+    color: rgba(255,255,255,0.45);
+    transition: color 0.2s;
   }
+  .footer-social a:hover { color: var(--white); }
 
-  .footer-contact a {
-    color: var(--sand);
-    transition: opacity 0.2s;
-  }
-
-  .footer-contact a:hover { opacity: 0.7; }
-
-  .footer-col h4 {
-    font-family: var(--font-body);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--sand);
+  /* Nav columns */
+  .footer-nav-col h4 {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--white);
     margin-bottom: var(--space-sm);
   }
 
-  .footer-col li { margin-bottom: 0.6rem; }
-
-  .footer-col a {
-    font-size: 0.9rem;
-    color: var(--warm-gray);
+  .footer-nav-col ul { list-style: none; padding: 0; margin: 0; }
+  .footer-nav-col li { margin-bottom: 0.5rem; }
+  .footer-nav-col a {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: rgba(255,255,255,0.55);
     transition: color 0.2s;
   }
+  .footer-nav-col a:hover { color: var(--white); }
 
-  .footer-col a:hover { color: var(--white); }
-
+  /* Bottom bar */
   .footer-bottom {
     border-top: 1px solid rgba(255,255,255,0.1);
     padding-top: var(--space-md);
@@ -659,38 +851,50 @@ const hotelSchema = JSON.stringify({
     flex-wrap: wrap;
     gap: var(--space-sm);
   }
-
   .footer-bottom p {
-    font-size: 0.8rem;
-    color: var(--warm-gray);
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    max-width: none;
   }
-
   .footer-legal {
     display: flex;
     gap: var(--space-md);
   }
-
   .footer-legal a {
-    font-size: 0.8rem;
-    color: var(--warm-gray);
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
     transition: color 0.2s;
   }
+  .footer-legal a:hover { color: rgba(255,255,255,0.7); }
 
-  .footer-legal a:hover { color: var(--white); }
+  @media (max-width: 1100px) {
+    .footer-top {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .footer-address-col {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: var(--space-2xl);
+      align-items: flex-start;
+    }
+    .footer-social { margin-top: 0; align-self: flex-end; }
+  }
 
-  @media (max-width: 900px) {
-    .footer-grid {
+  @media (max-width: 700px) {
+    .footer-top {
       grid-template-columns: 1fr 1fr;
-      gap: var(--space-lg);
+    }
+    .footer-address-col {
+      grid-column: 1 / -1;
+      flex-direction: column;
+      gap: var(--space-md);
     }
     .footer-bottom {
       flex-direction: column;
       text-align: center;
     }
-    .portfolio-inner {
-      flex-direction: column;
-      gap: var(--space-xs);
-      align-items: flex-start;
+    .noble-house-grid {
+      gap: var(--space-md) var(--space-lg);
     }
   }
 </style>
